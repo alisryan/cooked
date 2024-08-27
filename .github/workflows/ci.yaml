@@ -1,0 +1,49 @@
+---
+name: CI
+
+on:
+  pull_request:
+    branches: [ "*" ]
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 06 * * MON'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Lint Nix code
+        run: nix develop --impure -c alejandra -c .
+      # TODO: Lint BE + FE code
+  build:
+    name: Build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Free disk space
+        if: runner.os == 'Linux'
+        uses: endersonmenezes/free-disk-space@v2
+        with:
+          remove_dotnet: true
+          remove_haskell: true
+          remove_packages: "azure-cli microsoft-edge-stable google-chrome-stable firefox postgresql* *llvm* mysql*"
+          testing: false
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      # TODO: Build BE + FE
+...
