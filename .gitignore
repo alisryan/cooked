@@ -5,3 +5,15 @@ backend/config/.env
 .devenv/
 .direnv/
 .pre-commit-config.yaml
+
+# FRONTEND
+
+frontend/node_modules
+frontend/*.pnp
+frontend/*.pnp.js
+frontend/*.yarn/install-state.gz
+frontend/.DS_Store
+frontend/*.pem
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+frontend/.next
