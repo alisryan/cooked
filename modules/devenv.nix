@@ -21,12 +21,16 @@
         env-help.enable = true;
         languages = {
           go.enable = true;
-          javascript.enable = true;
+          javascript = {
+            enable = true;
+            pnpm.enable = true;
+          };
           nix.enable = true;
           typescript.enable = true;
         };
-        packages = [
-          pkgs.commitizen
+        packages = with pkgs; [
+          commitizen
+          golangci-lint
         ];
         pre-commit = {
           default_stages = ["pre-push"];
@@ -64,11 +68,33 @@
         };
 
         scripts = {
-          "run-server" = {
-            description = "Runs the backend server";
+          "backend-dev" = {
+            description = "Runs the backend server in development mode.";
             exec = ''
               cd $DEVENV_ROOT/backend
-              ${pkgs.go}/bin/go run cmd/server/main.go
+              go run cmd/server/main.go
+            '';
+          };
+          "backend-lint" = {
+            description = "Lints backend code.";
+            exec = ''
+              cd $DEVENV_ROOT/backend
+              golangci-lint run ./...
+            '';
+          };
+          "frontend-dev" = {
+            description = "Runs the frontend server in development mode.";
+            exec = ''
+              cd $DEVENV_ROOT/frontend
+              pnpm install
+              pnpm exec next dev
+            '';
+          };
+          "frontend-lint" = {
+            description = "Lints frontend code.";
+            exec = ''
+              cd $DEVENV_ROOT/frontend
+              pnpm exec next lint
             '';
           };
         };
