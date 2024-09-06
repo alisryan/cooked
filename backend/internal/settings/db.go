@@ -1,10 +1,12 @@
 package settings
 
-type DB interface {
-	Connection() string
+type Postgres struct {
+	Host     string
+	Name     string
+	Port     int
+	User     string
+	Password string
 }
-
-type Postgres struct{}
 
 // TODO: implement the connection string
 func (p Postgres) Connection() string {

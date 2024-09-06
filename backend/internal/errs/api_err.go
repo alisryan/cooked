@@ -33,12 +33,12 @@ func InvalidJSON() APIError {
 	return NewAPIError(http.StatusBadRequest, errors.New("invalid JSON request data"))
 }
 
-func NotFound(title string) APIError {
-	return NewAPIError(http.StatusNotFound, fmt.Errorf("%s not found", title))
+func NotFound(title string, withKey string, withValue any) APIError {
+	return NewAPIError(http.StatusNotFound, fmt.Errorf("%s with %s='%s' not found", title, withKey, withValue))
 }
 
-func Conflict(title string, with string) APIError {
-	return NewAPIError(http.StatusConflict, fmt.Errorf("conflict: %s with %s already exists", title, with))
+func Conflict(title string, withKey string, withValue any) APIError {
+	return NewAPIError(http.StatusConflict, fmt.Errorf("conflict: %s with %s='%s' already exists", title, withKey, withValue))
 }
 
 func InvalidRequestData(errors map[string]string) APIError {

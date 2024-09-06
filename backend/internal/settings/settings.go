@@ -1,15 +1,11 @@
 package settings
 
-import "log/slog"
-
 type Settings struct {
 	Application
-	DB
+	Postgres
 }
 
 // TOOD: implement loading the environment variables
-func Load(path string) (Settings, error) {
-	slog.Info("loading settings", "path", path)
-
+func Load() (Settings, error) {
 	return Settings{}, nil
 }

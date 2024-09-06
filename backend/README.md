@@ -1,8 +1,12 @@
 # backend
 
 ## Implement the following
-- [ ] Load settings from environment variables
-- [ ] Connect to the database
-- [ ] Create the new routes @Alder
-- [ ] Add the necessary DB queries to the interface @Alder
-- [ ] Implement the necessary DB queries for postgres @Alder
+
+- [ ] Load all the fields of settings.Settings from environment variables
+- [ ] Connect to the database using the settings.Settings struct
+- [ ] Add the following DB queries to the storage.Storage interface
+  - [ ] Create a recipe
+  - [ ] Get all recipes
+- [ ] Implement the necessary DB queries to the postgres.Postgres struct
+  - [ ] Create a recipe
+  - [ ] Get all recipes

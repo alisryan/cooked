@@ -12,7 +12,7 @@ type DB struct {
 }
 
 // TODO: implement connecting
-func New(settings settings.DB) *DB {
+func New(settings settings.Postgres) *DB {
 	slog.Info("creating new postgres db", "settings", settings, "connection", settings.Connection())
 	return &DB{}
 }

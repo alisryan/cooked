@@ -11,15 +11,20 @@ import (
 	"github.com/GenerateNU/cooked/backend/internal/server"
 	"github.com/GenerateNU/cooked/backend/internal/settings"
 	"github.com/GenerateNU/cooked/backend/internal/storage/postgres"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	settings, err := settings.Load("config")
+	if err := godotenv.Load("config/.env"); err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+
+	settings, err := settings.Load()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	db := postgres.New(settings.DB)
+	db := postgres.New(settings.Postgres)
 	app := server.InitApp(server.Params{Storage: db})
 
 	go func() {
