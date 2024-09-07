@@ -13,7 +13,6 @@ type CreateRecipeProps = {
 };
 
 export default function CreateRecipe({ onSuccess }: CreateRecipeProps) {
-    // Form handling with react-hook-form
     const {
         register,
         handleSubmit,
@@ -22,19 +21,16 @@ export default function CreateRecipe({ onSuccess }: CreateRecipeProps) {
         control,
     } = useForm<Recipe>();
 
-    // Mutation for the API call to create a recipe
     const { mutate, isSuccess, error } = useMutation({
         mutationFn: createRecipe,
     });
 
-    // Handling the API response:
     useEffect(() => {
         if (isSuccess) {
-            onSuccess(); // Call the callback when the recipe creation is successful
+            onSuccess(); 
         }
     }, [isSuccess, onSuccess]);
 
-    // Parse the duration (utility function)
     const parseDuration = (duration: string) => {
         const minutes = Number(duration);
         if (isNaN(minutes) || minutes < 0) {
@@ -44,12 +40,11 @@ export default function CreateRecipe({ onSuccess }: CreateRecipeProps) {
 
         const hours = Math.floor(minutes / 60);
         const remainingMinutes = minutes % 60;
-        const seconds = (minutes % 1) * 60;  // If there are fractional minutes, convert to seconds
+        const seconds = (minutes % 1) * 60;  
 
         return `${hours}h${remainingMinutes}m${Math.round(seconds)}s`;
     };
 
-    // Form submission
     const onSubmit = (data: Recipe) => {
         const parsedCookDuration = parseDuration(data.cook_duration);
         if (!parsedCookDuration) return;
@@ -59,9 +54,9 @@ export default function CreateRecipe({ onSuccess }: CreateRecipeProps) {
             cook_duration: parsedCookDuration,
         };
 
-        console.log("Parsed Data", parsedData); // Log data to debug before sending
+        console.log("Parsed Data", parsedData);
 
-        mutate(parsedData); // Trigger the API call
+        mutate(parsedData); 
     };
 
     return (
@@ -113,7 +108,6 @@ export default function CreateRecipe({ onSuccess }: CreateRecipeProps) {
                 helperText={errors.image_url?.message}
             />
 
-            {/* Meal Selection using Controller for better control */}
             <FormControl fullWidth error={!!errors.meal}>
                 <InputLabel id="meal-label">Meal</InputLabel>
                 <Controller
