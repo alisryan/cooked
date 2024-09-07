@@ -8,7 +8,7 @@ export enum Meal {
 export type Recipe = {
     id: string;
     name: string;
-    cook_duraton: string;
+    cook_duration: string;
     instructions: string;
     image_url: string;
     meal: Meal;

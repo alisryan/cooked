@@ -4,19 +4,17 @@ import { Recipe } from "@/types/recipe";
 const RECIPE_BASE_URL = API_BASE_URL + '/recipes';
 
 export async function fetchAllRecipes(): Promise<Recipe[]> {
-    try {
-        const response = await fetch(RECIPE_BASE_URL);
-        console.log("recipe service fetching data - status: ", response.status)
-        return response.json();
-    }
-    catch (error) {
-        console.error("recipe service error: ", error);
+    const response = await fetch(RECIPE_BASE_URL);
+
+    if (response.status > 299) {
+        console.error("recipe service error: ", response.status);
         throw new Error("Failed fetching recipes")
     }
+
+    return response.json();
 }
 
 export async function createRecipe(recipe: Recipe): Promise<void> {
-    try {
         const response = await fetch(RECIPE_BASE_URL, {
             method: 'POST',
             headers: {
@@ -24,10 +22,9 @@ export async function createRecipe(recipe: Recipe): Promise<void> {
             },
             body: JSON.stringify(recipe)
         });
-        console.log("recipe service creating data - status: ", response.status)
-    }
-    catch (error) {
-        console.error("recipe service error: ", error);
-        throw new Error("Failed creating recipe")
-    }
+
+        if (response.status > 299) {
+            console.error("recipe service error: ", response.status);
+            throw new Error("Failed creating recipe")
+        }
 }

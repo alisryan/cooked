@@ -29,7 +29,6 @@
           typescript.enable = true;
         };
         packages = with pkgs; [
-          commitizen
           golangci-lint
         ];
         pre-commit = {
@@ -42,7 +41,6 @@
               stages = ["pre-commit"];
             };
             check-yaml.enable = true;
-            commitizen.enable = true;
             deadnix.enable = true;
             detect-private-keys = {
               enable = true;
