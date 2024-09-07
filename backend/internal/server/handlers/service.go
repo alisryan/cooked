@@ -3,7 +3,7 @@ package handlers
 import "github.com/GenerateNU/cooked/backend/internal/storage"
 
 type Service struct {
-	storage.Storage
+	store storage.Storage
 }
 
 func NewService(storage storage.Storage) *Service {

@@ -1,11 +1,14 @@
 package settings
 
+import (
+	"github.com/caarlos0/env/v11"
+)
+
 type Settings struct {
-	Application
-	Postgres
+	Application `envPrefix:"APP_"`
+	Postgres    `envPrefix:"DB_"`
 }
 
-// TOOD: implement loading the environment variables
 func Load() (Settings, error) {
-	return Settings{}, nil
+	return env.ParseAs[Settings]()
 }
